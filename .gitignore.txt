@@ -1,0 +1,23 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+
+# Generated output
+output/*
+!output/README.md
