@@ -1,20 +1,40 @@
 # Wound Healing Segmentation
 
-Automatic image-processing pipeline for wound healing scratch-assay microscopy images.
+Image-processing methods for automatic segmentation and quantitative analysis of wound healing scratch-assay microscopy images.
 
-This repository contains the third and current image-processing pipeline developed during an undergraduate scientific research project focused on the automatic segmentation and quantitative analysis of wound healing assays.
+This repository contains three image-processing pipelines developed and evaluated during an undergraduate scientific research project focused on the automatic identification of wound regions in microscopy images.
 
-The method was designed to identify the wound region in microscopy images while dealing with variations in image brightness, cell migration, texture, and artifacts commonly observed between images acquired at different experimental time points.
+The pipelines represent successive approaches investigated throughout the research, ranging from conventional threshold-based segmentation to a more adaptive image-processing framework designed to handle variations in illumination, texture, cellular migration, and experimental artifacts.
 
 ---
 
 ## Overview
 
-The proposed pipeline performs automatic processing of wound healing microscopy images and generates segmented wound regions that can be used for quantitative analysis.
+Automatic analysis of wound healing scratch assays can reduce the time required for manual wound-area measurement and improve the reproducibility of quantitative evaluations.
 
-The processing workflow includes image preprocessing, adaptive segmentation, morphological operations, and wound-region evaluation.
+During this research, three processing pipelines were investigated:
 
-The current implementation corresponds to **Pipeline 3**, developed as an adaptive alternative to previous image-processing approaches.
+### Pipeline 1 — Conventional Segmentation
+
+The first pipeline was developed in MATLAB and uses a conventional image-processing workflow based on preprocessing, contrast enhancement, threshold-based segmentation, and morphological refinement.
+
+This approach provides relatively low computational complexity but can be more sensitive to local artifacts and variations in wound appearance.
+
+### Pipeline 2 — Texture-Based Segmentation
+
+The second pipeline was also developed in MATLAB and introduces additional image-processing strategies for texture analysis and segmentation.
+
+The workflow includes homomorphic filtering, Gabor-based texture analysis, clustering using k-means, and morphological processing.
+
+This approach was investigated to improve the discrimination between wound and cellular regions in images with more complex textures.
+
+### Pipeline 3 — Adaptive Segmentation
+
+The third pipeline was implemented in Python and corresponds to the current adaptive framework developed during the research.
+
+This method introduces adaptive processing strategies intended to account for variations in image characteristics and experimental time points.
+
+The pipeline was designed particularly to improve segmentation robustness in images where cellular migration, reduced contrast, texture variations, and experimental artifacts make the wound boundaries less evident.
 
 ---
 
@@ -24,9 +44,16 @@ The current implementation corresponds to **Pipeline 3**, developed as an adapti
 wound-healing-segmentation/
 │
 ├── src/
-│   ├── wound_healing_segmentation.py
-│   ├── area_eval_interface.py
-│   └── matlab_style_area_eval.py
+│   ├── pipeline_1_matlab/
+│   │   └── pipeline_1.m
+│   │
+│   ├── pipeline_2_matlab/
+│   │   └── pipeline_2.m
+│   │
+│   └── pipeline_3_python/
+│       ├── wound_healing_segmentation.py
+│       ├── area_eval_interface.py
+│       └── matlab_style_area_eval.py
 │
 ├── input/
 │   └── README.md
@@ -39,57 +66,99 @@ wound-healing-segmentation/
 └── README.md
 ```
 
-### `src/`
+---
 
-Contains the Python source code required for image processing and quantitative evaluation.
+## Processing Workflow
 
-### `input/`
+The three pipelines follow the general workflow:
 
-Directory intended for microscopy images to be processed.
+```text
+Microscopy image
+       ↓
+Image preprocessing
+       ↓
+Wound-region segmentation
+       ↓
+Morphological refinement
+       ↓
+Wound mask
+       ↓
+Quantitative analysis
+```
 
-### `output/`
-
-Directory intended for generated segmentation results and quantitative outputs.
+The specific preprocessing and segmentation strategies differ between the three pipelines.
 
 ---
 
-## Requirements
+## Pipeline 1
 
-The software was developed in Python.
+**Language:** MATLAB
 
-The required Python packages are listed in:
+Pipeline 1 represents the initial conventional image-processing approach investigated in the project.
+
+The source code is available in:
+
+```text
+src/pipeline_1_matlab/
+```
+
+Its main processing stages include image preprocessing, contrast enhancement, automatic threshold-based segmentation, and morphological refinement.
+
+---
+
+## Pipeline 2
+
+**Language:** MATLAB
+
+Pipeline 2 was developed to introduce additional texture information into the segmentation procedure.
+
+The source code is available in:
+
+```text
+src/pipeline_2_matlab/
+```
+
+The method includes preprocessing strategies such as homomorphic filtering, Gabor-based texture analysis, clustering, and morphological operations.
+
+---
+
+## Pipeline 3
+
+**Language:** Python
+
+Pipeline 3 corresponds to the adaptive framework developed during the final stage of the study.
+
+The source code is available in:
+
+```text
+src/pipeline_3_python/
+```
+
+The method was designed to provide greater robustness to differences between microscopy images and experimental conditions, particularly for images acquired after cellular migration.
+
+---
+
+## Python Requirements
+
+The dependencies required for Pipeline 3 are listed in:
 
 ```text
 requirements.txt
 ```
 
-Python 3.14 was used in the current development environment.
-
----
-
-## Installation
-
-Clone or download this repository.
-
-Open a terminal inside the project directory:
-
-```powershell
-cd wound-healing-segmentation
-```
-
-Create a virtual environment:
+To create a virtual environment:
 
 ```powershell
 python -m venv .venv
 ```
 
-Activate the environment on Windows PowerShell:
+Activate it on Windows PowerShell:
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Install the required dependencies:
+Install the dependencies:
 
 ```powershell
 python -m pip install -r requirements.txt
@@ -97,91 +166,91 @@ python -m pip install -r requirements.txt
 
 ---
 
-## Running the Software
+## Running Pipeline 3
 
-With the virtual environment activated, run:
+From the repository root, run:
 
 ```powershell
-python .\src\wound_healing_segmentation.py
+python .\src\pipeline_3_python\wound_healing_segmentation.py
 ```
 
 The processing interface will then be initialized.
 
 ---
 
-## Processing Pipeline
+## MATLAB Pipelines
 
-The general workflow of Pipeline 3 can be summarized as:
+Pipeline 1 and Pipeline 2 were developed in MATLAB.
+
+Their source files are located in:
 
 ```text
-Microscopy image
-      ↓
-Image preprocessing
-      ↓
-Adaptive parameter selection
-      ↓
-Wound-region segmentation
-      ↓
-Morphological refinement
-      ↓
-Wound mask
-      ↓
-Quantitative analysis
+src/pipeline_1_matlab/
 ```
 
-The pipeline was developed to improve segmentation robustness, particularly when analyzing wound healing images acquired after cellular migration has altered the original wound boundaries.
+and
+
+```text
+src/pipeline_2_matlab/
+```
+
+The scripts should be executed from their respective directories using MATLAB.
 
 ---
 
-## Input Images
+## Experimental Images and Data Availability
 
-The software is intended for microscopy images obtained from wound healing scratch assays.
+The experimental microscopy dataset used for the development and evaluation of the pipelines is **not publicly distributed through this repository**.
 
-Experimental images used during the development and validation of this research are **not included in this repository by default**.
+Therefore, the original wound healing microscopy images used in the study are not included.
 
-Images to be processed can be placed in the `input/` directory or selected through the processing interface, depending on the current software configuration.
+The `input/` directory is provided only as a location where users can place their own compatible microscopy images for processing.
+
+Experimental data must not be committed to the repository.
 
 ---
 
 ## Output
 
-Depending on the selected processing options, the software can generate outputs such as:
+Depending on the selected pipeline and processing configuration, the software may generate:
 
-* segmented wound masks;
+* wound segmentation masks;
 * processed microscopy images;
 * wound-area measurements;
-* quantitative analysis files;
-* segmentation evaluation results.
+* quantitative results;
+* segmentation evaluation data.
 
-Generated files should be stored in the `output/` directory.
+Generated files should be stored in the `output/` directory and are not tracked by Git by default.
 
 ---
 
 ## Scientific Context
 
-Scratch assays are commonly used to investigate cellular migration and wound closure in vitro.
+Scratch assays are widely used to investigate cellular migration and wound closure in vitro.
 
-Manual wound-area measurement can be time-consuming and susceptible to variability between analyses. This project investigates classical image-processing strategies for automatically identifying wound regions and supporting quantitative evaluation of wound healing experiments.
+Manual wound-area delineation may require substantial analysis time and can introduce variability into quantitative measurements. Automatic image-processing methods provide an alternative for identifying wound regions and assisting quantitative evaluation.
 
-Pipeline 3 represents the adaptive processing framework developed during the final stage of the research.
+This project investigates the performance and limitations of three classical image-processing strategies developed progressively throughout the undergraduate research project.
 
 ---
 
 ## Limitations
 
-The current pipeline was developed and evaluated using microscopy images obtained under specific experimental and acquisition conditions.
+The pipelines were developed and evaluated using microscopy images obtained under specific experimental and acquisition conditions.
 
-Image characteristics such as illumination, contrast, cellular density, artifacts, and acquisition settings may affect segmentation performance.
+Variations in illumination, image contrast, cell density, acquisition system, experimental artifacts, and wound morphology may influence segmentation performance.
 
-Therefore, additional validation may be required before applying the method to images obtained from other laboratories, microscopy systems, cell lines, or experimental protocols.
+The experimental dataset used for validation originated from a specific laboratory environment, and additional validation is required before generalizing the methods to other microscopy systems, experimental protocols, or datasets.
 
 ---
 
 ## Data Availability
 
-The experimental image dataset is not distributed through this repository.
+The source code is publicly available in this repository.
 
-Example images may be added separately when appropriate for public distribution.
+The experimental microscopy images used in the research are not publicly available through this repository.
+
+Users interested in testing the algorithms may use their own compatible wound healing scratch-assay microscopy images.
 
 ---
 
@@ -189,16 +258,16 @@ Example images may be added separately when appropriate for public distribution.
 
 Developed as part of an undergraduate scientific research project at the **Federal University of Uberlândia (UFU)**.
 
-Author information and research contributors will be added to the final public release.
+Author and contributor information will be included in the final software release.
 
 ---
 
 ## Citation
 
-Citation information for the software and its associated scientific publication will be provided in a future release.
+Citation information for the software and its associated scientific publication will be provided in the final public release.
 
 ---
 
 ## License
 
-License information will be added before the final public release of the repository.
+License information will be provided in the final public release.
